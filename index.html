@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Terug naar Audiowissel</title>
+<style>
+  body { font: 17px/1.5 system-ui, sans-serif; background: #F3F5FA; color: #1B2340; display: grid; place-items: center; min-height: 100vh; margin: 0; padding: 16px; }
+  @media (prefers-color-scheme: dark) { body { background: #0F1328; color: #EEF1FA; } a { color: #6F82FF; } }
+  a { color: #2D46F0; }
+</style>
+</head>
+<body>
+<!-- Yoto only accepts https callbacks; this page hands the login back to the app on the home network. -->
+<p id="msg">Terug naar Audiowissel…</p>
+<script>
+  const target = "http://10.10.10.100:8096/auth/yoto/callback";
+  const q = new URLSearchParams(location.search), out = new URLSearchParams();
+  for (const k of ["code", "state", "error", "error_description"]) if (q.has(k)) out.set(k, q.get(k));
+  const url = target + "?" + out;
+  document.getElementById("msg").innerHTML = 'Terug naar Audiowissel… <a href="' + url.replace(/"/g, "&quot;") + '">Gaat het niet vanzelf? Tik hier.</a>';
+  location.replace(url);
+</script>
+</body>
+</html>
